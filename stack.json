@@ -2,5 +2,11 @@
   "clusterVariablesMeta": {
   },
   "stackVariables": {
+    "ECR_TOKEN_REFRESHER_KEY_ID": {
+      "secret": true
+    },
+    "ECR_TOKEN_REFRESHER_SECRET_KEY": {
+      "secret": true
+    }
   }
 }
