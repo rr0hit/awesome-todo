@@ -1,4 +1,5 @@
 {
   "base_domain" : "tools.demos.facets.cloud",
-  "basic_auth_enabled": true
+  "basic_auth_enabled": true,
+  "subdomains": []
 }
