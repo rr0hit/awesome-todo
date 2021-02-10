@@ -1,0 +1,75 @@
+{
+  "size": "MICRO",
+  "deploymentStrategy": "RollingUpdate",
+  "lbType": "internal",
+  "elbIdleTimeoutSeconds": 300,
+  "secretFileMounts": [],
+  "protocolGroup": "tcp",
+  "scaling": {
+    "hpaEnabled": true,
+    "hpaMinReplicas": 1,
+    "hpaMaxReplicas": 1,
+    "hpaMetricThreshold": 60
+  },
+  "liveness": {
+    "enableLivenessTCP": true,
+    "livenessPort": 8050,
+    "livenessInitialDelay": 30,
+    "livenessTimeout": 10,
+    "livenessFailureThreshold": 20,
+    "livenessPeriod": 10,
+    "livenessSuccessThreshold": 1
+  },
+  "readiness": {
+    "enableReadinessTCP": true,
+    "readinessInitialDelay": 30,
+    "readinessFailureThreshold": 20,
+    "readinessSuccessThreshold": 1,
+    "readinessPort": 8050,
+    "readinessTimeout": 10,
+    "readinessPeriod": 10
+  },
+  "ports": [
+    {
+      "name": "http",
+      "containerPort": 8050,
+      "lbPort": 8050
+    }
+  ],
+  "build": {
+    "ci": "external_image",
+    "external_image": "rr0hit/rockmongo:2.0"
+  },
+  "credentialRequests": {
+    "dbs": {
+      "mysql": [],
+      "mongo": []
+    },
+    "queues": {
+      "rabbitmq": []
+    },
+    "cloud": []
+  },
+  "environmentVariables": {
+    "static": {
+      "MONGO_AUTH": "true"
+    },
+    "dynamic": {
+      "MONGO_HOSTS": {
+        "resourceType": "mongo_merged_details",
+        "resourceName": "all",
+        "attribute": "hosts"
+      }
+    }
+  },
+  "k8s_service_names": [],
+  "ingress_rules": [
+    {
+      "ingress": "tools",
+      "path": "/",
+      "targetPort": 8050,
+      "domainPrefix": "rockmongo."
+    }
+  ],
+  "resourceAllocationStrategy": "GENERAL_PURPOSE"
+}

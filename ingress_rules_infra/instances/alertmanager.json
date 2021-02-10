@@ -1,0 +1,6 @@
+{
+  "path": "/",
+  "targetPort": 9093,
+  "k8s_service": "prometheus-operator-alertmanager",
+  "ingress": "tools"
+}

@@ -1,0 +1,6 @@
+{
+  "path": "/",
+  "targetPort": 5601,
+  "k8s_service": "logskibana-kibana",
+  "ingress": "tools"
+}

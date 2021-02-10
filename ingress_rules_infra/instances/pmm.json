@@ -1,0 +1,6 @@
+{
+  "path": "/",
+  "targetPort": 80,
+  "k8s_service": "pmm-service",
+  "ingress": "tools"
+}

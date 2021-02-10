@@ -1,0 +1,6 @@
+{
+  "path": "/",
+  "targetPort": 80,
+  "k8s_service": "prometheus-operator-grafana",
+  "ingress": "tools"
+}

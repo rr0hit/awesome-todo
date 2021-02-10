@@ -1,0 +1,6 @@
+{
+  "path": "/",
+  "targetPort": 9090,
+  "k8s_service": "prometheus-operator-prometheus",
+  "ingress": "tools"
+}

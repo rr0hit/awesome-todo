@@ -1,0 +1,10 @@
+{
+  "name": "demo-mongo",
+  "k8s_service_names": [
+    "demo-mongo-primary"
+  ],
+  "k8s_slave_service_names": [
+    "demo-mongo-secondary"
+  ],
+  "size": "S"
+}
