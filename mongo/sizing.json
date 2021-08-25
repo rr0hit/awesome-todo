@@ -6,8 +6,8 @@
   },
   "S": {
     "volumeSize": 100,
-    "podCPULimit": 2,
-    "podMemoryLimit": 4000
+    "podCPULimit": 0.25,
+    "podMemoryLimit": 512
   },
   "M": {
     "volumeSize": 150,
