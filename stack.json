@@ -8,5 +8,9 @@
     }
   },
   "stackVariables": {
+  },
+  "componentVersions": {
+    "KUBERNETES": "1.17"
   }
+
 }
