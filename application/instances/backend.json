@@ -38,7 +38,7 @@
   ],
   "build": {
     "ci": "external_image",
-    "external_image": "486456986266.dkr.ecr.us-west-1.amazonaws.com/ops/demo-backend:a3c3882-2"
+    "external_image": "313496281593.dkr.ecr.us-east-1.amazonaws.com/ops/demo-backend:a3c3882-2"
   },
   "credentialRequests": {
     "dbs": {
