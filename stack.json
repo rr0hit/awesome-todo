@@ -1,10 +1,12 @@
 {
   "clusterVariablesMeta": {
-    "ECR_TOKEN_REFRESHER_KEY_ID": {
-      "secret": true
+    "MY_SAMPLE_SECRET": {
+      "secret": true,
+      "value": "NOTSET"
     },
-    "ECR_TOKEN_REFRESHER_SECRET_KEY": {
-      "secret": true
+    "MY_COMMON_ENV_VAR": {
+      "secret": false,
+      "value": "defaultvalue"
     }
   },
   "stackVariables": {
