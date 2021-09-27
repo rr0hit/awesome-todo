@@ -32,7 +32,8 @@
           "name": "http",
           "port": 3000
         }
-      ]
+      ],
+      "command": ["/bin/bash", "-c", "MONGODB_URI=mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@mongo-rs-demomongo-mongodb:27017/?authSource=admin npm start dev"]
     },
     "loadbalancing": {
       "rules": []
@@ -60,7 +61,6 @@
         "permissionName": "demomongoaccess",
         "attribute": "password"
       }
-    },
-    "command": ["/bin/bash", "-c", "MONGODB_URI=mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@mongo-rs-demomongo-mongodb:27017/?authSource=admin npm start dev"]
+    }
   }
 }
