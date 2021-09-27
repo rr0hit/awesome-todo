@@ -1,6 +1,4 @@
 {
-  "base_domain" : "todo.demos.facets.cloud",
-  "default_ingress": true,
-  "basic_auth_enabled": false,
-  "subdomains": []
+  "apiVersion" : "v2",
+  "subdomains" : []
 }
