@@ -1,7 +1,7 @@
 {
   "kind": "facets.modules.common.application",
   "apiVersion": "v2",
-  "disabled": true,
+  "disabled": false,
   "metadata": {
   },
   "spec": {
