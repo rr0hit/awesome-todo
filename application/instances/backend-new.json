@@ -1,0 +1,66 @@
+{
+  "kind": "facets.modules.common.application",
+  "apiVersion": "v2",
+  "disabled": true,
+  "metadata": {
+  },
+  "spec": {
+    "release": {
+      "strategy": "RollingUpdate",
+      "build": {
+        "image": "313496281593.dkr.ecr.us-east-1.amazonaws.com/ops/demo-backend:a3c3882-2"
+      }
+    },
+    "runtime": {
+      "healthCheck": {
+        "startupTime": 30,
+        "timeout": 20,
+        "period": 30,
+        "portName": "http"
+      },
+      "autoscaling": {
+        "min": 1,
+        "max": 3,
+        "cpuThreshold": "50"
+      },
+      "size": {
+        "namespace": "GENERAL_PURPOSE",
+        "value": "MICRO"
+      },
+      "ports": [
+        {
+          "name": "http",
+          "port": 3000
+        }
+      ]
+    },
+    "loadbalancing": {
+      "rules": []
+    },
+    "permission": [
+      {
+        "name": "demomongoaccess",
+        "resourceType": "mongo",
+        "resourceName": "demomongo",
+        "permission": "READ_WRITE"
+      }
+    ],
+    "env": {
+      "NODE_ENV": {
+        "type": "static",
+        "default": "prod"
+      },
+      "MONGODB_USER": {
+        "type": "credential",
+        "permissionName": "demomongoaccess",
+        "attribute": "userName"
+      },
+      "MONGODB_PASSWORD": {
+        "type": "credential",
+        "permissionName": "demomongoaccess",
+        "attribute": "password"
+      }
+    },
+    "command": ["/bin/bash", "-c", "MONGODB_URI=mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@mongo-rs-demomongo-mongodb:27017/?authSource=admin npm start dev"]
+  }
+}

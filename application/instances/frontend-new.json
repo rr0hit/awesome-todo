@@ -1,0 +1,58 @@
+{
+  "kind": "facets.modules.common.application",
+  "apiVersion": "v2",
+  "disabled": true,
+  "metadata": {
+  },
+  "spec": {
+    "release": {
+      "strategy": "RollingUpdate",
+      "build": {
+        "image": "313496281593.dkr.ecr.us-east-1.amazonaws.com/ops/demo-frontend:a3c3882-2"
+      }
+    },
+    "runtime": {
+      "healthCheck": {
+        "startupTime": 30,
+        "timeout": 20,
+        "period": 30,
+        "portName": "http"
+      },
+      "autoscaling": {
+        "min": 1,
+        "max": 2,
+        "cpuThreshold": "50"
+      },
+      "size": {
+        "namespace": "GENERAL_PURPOSE",
+        "value": "MICRO"
+      },
+      "ports": [
+        {
+          "name": "http",
+          "port": 3000
+        }
+      ]
+    },
+    "loadbalancing": {
+      "rules": [
+        {
+          "ingress": "demoingress",
+          "path": "/",
+          "portName": "http"
+        }
+      ]
+    },
+    "permission": [],
+    "env": {
+      "CI": {
+        "type": "static",
+        "default": "true"
+      },
+      "DANGEROUSLY_DISABLE_HOST_CHECK": {
+        "type": "static",
+        "default": "true"
+      }    
+    }
+  }
+}
