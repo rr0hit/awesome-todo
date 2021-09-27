@@ -12,6 +12,7 @@
       }
     },
     "runtime": {
+      "serviceNames": ["backend"]
       "healthCheck": {
         "startupTime": 30,
         "timeout": 20,
