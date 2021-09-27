@@ -1,4 +1,5 @@
 {
   "apiVersion" : "v2",
-  "subdomains" : []
+  "subdomains" : [],
+  "basic_auth_enabled": true
 }
