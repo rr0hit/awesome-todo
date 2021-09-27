@@ -1,9 +1,0 @@
-{
-  "name": "demo2",
-  "k8s_service_names": [
-    "demo-mongo-primary2"
-  ],
-  "k8s_slave_service_names": [
-    "demo-mongo-secondary2"
-  ]
-}
