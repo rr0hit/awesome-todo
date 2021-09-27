@@ -1,0 +1,9 @@
+{
+  "spec": {
+    "newrelic_infra_monitoring": false,
+    "pod_dumps_archival": false,
+    "pmm": false,
+    "choas_testing": false,
+    "spot_fleet": true
+  }
+}
