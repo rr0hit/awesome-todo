@@ -12,7 +12,7 @@
   "stackVariables": {
   },
   "componentVersions": {
-    "KUBERNETES": "1.17"
+    "KUBERNETES": "1.19"
   }
 
 }
