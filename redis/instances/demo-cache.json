@@ -1,0 +1,7 @@
+{
+  "size": "S",
+  "k8s_service_names" : ["mycache"],
+  "name": "demo-cache",
+  "parameter_overrides" : {},
+  "persistance_enabled": "false"
+}
