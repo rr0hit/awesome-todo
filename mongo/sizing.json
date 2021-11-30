@@ -1,26 +1,26 @@
 {
   "XS": {
-    "volumeSize": 50,
+    "volumeSize": 10,
     "podCPULimit": 1,
     "podMemoryLimit": 1000
   },
   "S": {
-    "volumeSize": 100,
+    "volumeSize": 10,
     "podCPULimit": 0.25,
     "podMemoryLimit": 512
   },
   "M": {
-    "volumeSize": 150,
+    "volumeSize": 10,
     "podCPULimit": 2,
     "podMemoryLimit": 8000
   },
   "L": {
-    "volumeSize": 200,
+    "volumeSize": 10,
     "podCPULimit": 3,
     "podMemoryLimit": 6000
   },
   "XL": {
-    "volumeSize": 100,
+    "volumeSize": 10,
     "podCPULimit": 4,
     "podMemoryLimit": 8000
   }
