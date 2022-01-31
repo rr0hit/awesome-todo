@@ -45,6 +45,17 @@
         "resourceType": "mongo",
         "resourceName": "demomongo",
         "permission": "READ_WRITE"
+      },
+      {
+        "name": "defaultpostgres",
+        "resourceType": "postgres",
+        "resourceName": "default",
+        "permission": "READ_WRITE",
+        "additional_options": {
+          "databases": {
+            "mydb1": ["demoschema1", "demoschema2"] 
+          }
+        }
       }
     ],
     "env": {
