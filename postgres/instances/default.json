@@ -2,14 +2,14 @@
   "apiVersion": "v1",
   "kind": "facets.modules.common.postgres",
   "metadata": {
-    "name": "demo-metadata",
+    "name": "default",
     "tags": {}
   },
   "spec": {
     "flavour": "aurora",
     "component_version": "11.12",
     "databses": {},
-    "name": "mypostgres1",
+    "name": "default",
     "reader_count": 1,
     "reader_service_names": [
       "mydemoreaderpg",
