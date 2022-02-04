@@ -8,7 +8,11 @@
   "spec": {
     "flavour": "aurora",
     "component_version": "11.12",
-    "databses": {},
+    "databses": {
+      "mydb1": {
+        "schema": ["demoschema1", "demoschema2"]
+      }
+    },
     "name": "default",
     "reader_count": 1,
     "reader_service_names": [
