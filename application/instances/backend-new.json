@@ -74,6 +74,16 @@
         "type": "credential",
         "permissionName": "demomongoaccess",
         "attribute": "password"
+      },
+      "PG_USER": {
+        "type": "credential",
+        "permissionName": "defaultpostgres",
+        "attribute": "userName"
+      },
+      "PG_PASSWORD": {
+        "type": "credential",
+        "permissionName": "defaultpostgres",
+        "attribute": "password"
       }
     }
   }
