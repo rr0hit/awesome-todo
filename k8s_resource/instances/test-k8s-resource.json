@@ -54,7 +54,7 @@
         "type": "ClusterIP",
         "ports": [
           {
-            "port": 80,
+            "port": 8080,
             "name": "http",
             "targetPort": 80
           }
