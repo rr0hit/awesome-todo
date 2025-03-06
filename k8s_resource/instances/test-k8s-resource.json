@@ -1,6 +1,10 @@
 {
   "kind": "k8s_resource",
-  "metadata": {},
+  "metadata": {
+    "annotation": {
+      "test123": "ytest"
+    }
+  },
   "flavor": "k8s",
   "version": "0.2",
   "disabled": true,
