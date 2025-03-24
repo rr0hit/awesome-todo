@@ -11,7 +11,7 @@
   "spec": {
     "enable_host_anti_affinity": false,
     "type": "application",
-    "restart_policy": "Always",
+    "restart_policy": "Never",
     "release": {
       "strategy": {
         "type": "RollingUpdate"
