@@ -1,7 +1,0 @@
-{
-  "kind": "gcp-provider",
-  "flavor": "standard",
-  "version": "1.0",
-  "disabled": true,
-  "spec": {}
-}
