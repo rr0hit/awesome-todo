@@ -40,14 +40,9 @@
         "liveness_check_type": "None"
       },
       "ports": {
-        "ports1": {
-          "port": "8080",
+        "ports3": {
+          "port": "${mongo.demomongo.out.interfaces.cluster.endpoint}",
           "service_port": "8081",
-          "protocol": "tcp"
-        },
-        "ports2": {
-          "port": "8082",
-          "service_port": "8082",
           "protocol": "tcp"
         }
       }
