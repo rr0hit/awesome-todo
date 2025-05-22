@@ -3,7 +3,8 @@
   "metadata": {
     "labels": {
       "deliveryType": "MANUAL"
-    }
+    },
+    "namespace": "default"
   },
   "kind": "service",
   "disabled": true,
@@ -16,7 +17,8 @@
       "strategy": {
         "type": "RollingUpdate"
       },
-      "image": "${blueprint.self.artifacts.awesome-todo-test-deployment}"
+      "image": "${blueprint.self.artifacts.awesome-todo-test-deployment}",
+      "image_pull_policy": "IfNotPresent"
     },
     "runtime": {
       "args": [],
@@ -36,6 +38,13 @@
       "health_checks": {
         "readiness_check_type": "None",
         "liveness_check_type": "None"
+      },
+      "ports": {
+        "ports1": {
+          "port": "8080",
+          "service_port": "8080",
+          "protocol": "tcp"
+        }
       }
     },
     "env": {
