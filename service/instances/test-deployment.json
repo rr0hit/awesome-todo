@@ -42,7 +42,12 @@
       "ports": {
         "ports1": {
           "port": "8080",
-          "service_port": "8080",
+          "service_port": "8081",
+          "protocol": "tcp"
+        },
+        "ports2": {
+          "port": "8082",
+          "service_port": "8082",
           "protocol": "tcp"
         }
       }
