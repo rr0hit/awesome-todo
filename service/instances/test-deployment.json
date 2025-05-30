@@ -30,7 +30,7 @@
         "cpu_threshold": "50"
       },
       "size": {
-        "cpu": "200m",
+        "cpu": "300m",
         "memory": "1Gi",
         "cpu_limit": "1000m",
         "memory_limit": "5Gi"
