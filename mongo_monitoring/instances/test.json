@@ -1,0 +1,45 @@
+{
+  "kind": "mongo_monitoring",
+  "flavor": "k8s",
+  "version": "0.1",
+  "metadata": {},
+  "disabled": true,
+  "spec": {
+    "alerts": {
+      "mongodb_down": {
+        "disabled": false,
+        "interval": "10m",
+        "severity": "critical"
+      },
+      "mongodb_virtual_memory_usage": {
+        "disabled": false,
+        "interval": "5m",
+        "severity": "critical",
+        "threshold": 3
+      },
+      "mongodb_too_many_connections": {
+        "disabled": false,
+        "interval": "5m",
+        "severity": "critical",
+        "threshold": 80
+      },
+      "mongodb_replication_lag": {
+        "disabled": false,
+        "interval": "0m",
+        "severity": "critical",
+        "threshold": 10
+      },
+      "mongodb_replica_member_unhealthy": {
+        "disabled": false,
+        "interval": "0m",
+        "severity": "critical"
+      }
+    }
+  },
+  "inputs": {
+    "default": {
+      "resource_type": "mongo",
+      "resource_name": "test"
+    }
+  }
+}
