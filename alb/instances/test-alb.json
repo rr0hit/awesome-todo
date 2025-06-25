@@ -1,5 +1,4 @@
 {
-  "$schema": "https://facets-cloud.github.io/facets-schemas/schemas/alb/alb.schema.json",
   "kind": "alb",
   "flavor": "default",
   "metadata": {},
@@ -10,12 +9,20 @@
     "private": false,
     "rules": {
       "rule1": {
-        "domain_prefix": "rule1",
+        "service_name": "cart-service",
         "path": "/test",
         "port": "8080",
+        "domain_prefix": "rule1",
         "port_name": "http-svc",
-        "priority": 1,
-        "service_name": "cart-service"
+        "priority": 1
+      },
+      "ingress-rules1": {
+        "service_name": "${service.test-deployment.out.attributes.service_name}",
+        "path": "/",
+        "port": "8081",
+        "domain_prefix": "test",
+        "port_name": "8081",
+        "priority": "2"
       }
     }
   }
