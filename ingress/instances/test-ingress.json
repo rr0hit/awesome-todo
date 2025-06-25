@@ -1,6 +1,5 @@
 {
   "kind": "ingress",
-  "$schema": "https://facets-cloud.github.io/facets-schemas/schemas/ingress/ingress.schema.json",
   "flavor": "aws_alb",
   "disabled": true,
   "version": "0.2",
@@ -22,6 +21,11 @@
           "app": ""
         },
         "disable_auth": false
+      },
+      "ingress-rules1": {
+        "service_name": "test",
+        "path": "/",
+        "port": "8081"
       }
     },
     "force_ssl_redirection": true
