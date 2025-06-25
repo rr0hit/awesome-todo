@@ -1,0 +1,22 @@
+{
+  "$schema": "https://facets-cloud.github.io/facets-schemas/schemas/alb/alb.schema.json",
+  "kind": "alb",
+  "flavor": "default",
+  "metadata": {},
+  "disabled": true,
+  "version": "0.1",
+  "spec": {
+    "force_ssl_redirection": true,
+    "private": false,
+    "rules": {
+      "rule1": {
+        "domain_prefix": "rule1",
+        "path": "/test",
+        "port": "8080",
+        "port_name": "http-svc",
+        "priority": 1,
+        "service_name": "cart-service"
+      }
+    }
+  }
+}
