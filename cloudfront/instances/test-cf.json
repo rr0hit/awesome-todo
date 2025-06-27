@@ -31,7 +31,8 @@
             "header_behavior": "none",
             "headers": [
               "test-header",
-              "test-header63"
+              "test-header6391839",
+              "test-header9293"
             ]
           },
           "query_strings_config": {
