@@ -13,17 +13,6 @@
     "aliases": {
       "alias1": "*.example.com"
     },
-    "viewer_certificate": {
-      "acm_certificate_arn": ""
-    },
-    "origins": {
-      "origin1": {
-        "domain_name": ""
-      },
-      "origin2": {
-        "domain_name": ""
-      }
-    },
     "cache_policies": {
       "sample_policy": {
         "max_ttl": 60,
@@ -34,12 +23,16 @@
             "cookie_behavior": "whitelist",
             "cookies": {
               "items": [
-                ""
+                null
               ]
             }
           },
           "headers_config": {
-            "header_behavior": "none"
+            "header_behavior": "none",
+            "headers": [
+              "test-header",
+              "test-header63"
+            ]
           },
           "query_strings_config": {
             "query_string_behavior": "none"
@@ -50,8 +43,6 @@
       }
     },
     "default_cache_behavior": {
-      "cache_policy_name": "",
-      "target_origin_id": "",
       "allowed_methods": [
         "GET",
         "HEAD"
@@ -64,9 +55,7 @@
     },
     "ordered_cache_behaviors": {
       "cache1": {
-        "cache_policy_name": "",
         "path_pattern": "/example/*",
-        "target_origin_id": "",
         "viewer_protocol_policy": "redirect-to-https",
         "allowed_methods": [
           "GET",
