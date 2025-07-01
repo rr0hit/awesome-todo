@@ -47,9 +47,6 @@
         }
       }
     },
-    "env": {
-      "LOG_LEVEL": "INFO"
-    },
     "cloud_permissions": {
       "aws": {
         "enable_irsa": false
