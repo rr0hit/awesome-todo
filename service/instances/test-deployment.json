@@ -51,6 +51,9 @@
       "aws": {
         "enable_irsa": false
       }
+    },
+    "env": {
+      "TEST": "ytesting"
     }
   }
 }
