@@ -4,7 +4,7 @@
     "labels": {
       "deliveryType": "MANUAL"
     },
-    "namespace": "default"
+    "namespace": "default1"
   },
   "kind": "service",
   "disabled": true,
@@ -37,7 +37,8 @@
       },
       "health_checks": {
         "readiness_check_type": "None",
-        "liveness_check_type": "None"
+        "liveness_check_type": "None",
+        "startup_check_type": "None"
       },
       "ports": {
         "ports3": {
@@ -55,5 +56,6 @@
     "env": {
       "TEST": "ytesting"
     }
-  }
+  },
+  "uiProps": {}
 }
