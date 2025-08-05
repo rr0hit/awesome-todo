@@ -4,7 +4,7 @@
     "labels": {
       "deliveryType": "MANUAL"
     },
-    "namespace": "default1"
+    "namespace": "default21"
   },
   "kind": "service",
   "disabled": true,
