@@ -16,7 +16,8 @@
       "strategy": {
         "type": "RollingUpdate"
       },
-      "image": "${blueprint.self.artifacts.awesome-todo-test-service}"
+      "image": "${blueprint.self.artifacts.awesome-todo-test-service}",
+      "image_pull_policy": "IfNotPresent"
     },
     "runtime": {
       "args": [],
@@ -27,19 +28,42 @@
         "max": 1,
         "cpu_threshold": "50"
       },
-      "ports": {},
+      "ports": {
+        "ports1": {
+          "port": "8080",
+          "service_port": "8080",
+          "protocol": "tcp"
+        },
+        "ports2": {
+          "port": "8081",
+          "service_port": "8081",
+          "protocol": "tcp"
+        }
+      },
       "size": {
         "cpu": "300m",
         "memory": "1Gi",
         "cpu_limit": "1000m",
         "memory_limit": "5Gi"
       },
-      "volumes": {}
+      "health_checks": {
+        "readiness_check_type": "PortCheck",
+        "readiness_start_up_time": 10,
+        "readiness_timeout": 10,
+        "readiness_period": 10,
+        "readiness_port": "8080",
+        "liveness_check_type": "None",
+        "startup_check_type": "None"
+      }
     },
     "env": {
       "LOG_LEVEL": "INFO"
     },
-    "init_containers": {},
-    "sidecars": {}
-  }
+    "cloud_permissions": {
+      "aws": {
+        "enable_irsa": false
+      }
+    }
+  },
+  "uiProps": {}
 }
