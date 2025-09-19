@@ -57,7 +57,8 @@
       }
     },
     "env": {
-      "LOG_LEVEL": "INFO"
+      "LOG_LEVEL": "INFO",
+      "test": "test134"
     },
     "cloud_permissions": {
       "aws": {
