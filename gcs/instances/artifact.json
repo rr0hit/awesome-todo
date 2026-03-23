@@ -1,0 +1,22 @@
+{
+  "disabled": false,
+  "flavor": "standard",
+  "kind": "gcs",
+  "metadata": {
+    "name": "artifact"
+  },
+  "spec": {
+    "custom_labels": {},
+    "lifecycle_rules": {
+      "action": "Delete",
+      "age_days": 30,
+      "enabled": false,
+      "storage_class": "NEARLINE"
+    },
+    "requester_pays": false,
+    "storage_class": "STANDARD",
+    "uniform_bucket_level_access": true,
+    "versioning_enabled": false
+  },
+  "version": "1.0"
+}
