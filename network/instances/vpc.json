@@ -1,0 +1,23 @@
+{
+  "disabled": false,
+  "flavor": "gcp_network",
+  "inputs": {
+    "cloud_account": {
+      "attributes": {
+        "project_id": "${cloud_account.default.out.default.attributes.project_id}",
+        "region": "${cloud_account.default.out.default.attributes.region}"
+      },
+      "interfaces": {},
+      "resource_name": "default",
+      "resource_type": "cloud_account"
+    }
+  },
+  "kind": "network",
+  "metadata": {
+    "name": "vpc"
+  },
+  "spec": {
+    "vpc_cidr": "10.13.0.0/16"
+  },
+  "version": "1.0"
+}
