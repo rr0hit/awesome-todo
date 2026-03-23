@@ -1,0 +1,11 @@
+{
+  "apiVersion": "v1",
+  "disabled": false,
+  "flavor": "gcp_provider",
+  "kind": "cloud_account",
+  "metadata": {
+    "name": "default"
+  },
+  "spec": {},
+  "version": "1.0"
+}
