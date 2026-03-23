@@ -1,0 +1,35 @@
+{
+  "disabled": false,
+  "flavor": "gke",
+  "inputs": {
+    "cloud_account": {
+      "attributes": {
+        "project_id": "${cloud_account.default.out.default.attributes.project_id}",
+        "region": "${cloud_account.default.out.default.attributes.region}"
+      },
+      "interfaces": {},
+      "resource_name": "default",
+      "resource_type": "cloud_account"
+    },
+    "network_details": {
+      "attributes": {
+        "vpc_cidr": "${network.vpc.out.default.attributes.vpc_cidr}",
+        "vpc_name": "${network.vpc.out.default.attributes.vpc_name}"
+      },
+      "interfaces": {},
+      "resource_name": "vpc",
+      "resource_type": "network"
+    }
+  },
+  "kind": "kubernetes_cluster",
+  "metadata": {
+    "name": "k8s-cluster"
+  },
+  "spec": {
+    "auto_upgrade": true,
+    "whitelisted_cidrs": [
+      "0.0.0.0/0"
+    ]
+  },
+  "version": "1.0"
+}
