@@ -1,65 +1,179 @@
 {
-  "flavor": "deployment",
+  "kind": "service",
+  "flavor": "default",
+  "version": "0.1",
   "metadata": {
-    "labels": {
-      "deliveryType": "MANUAL"
+    "name": "control-plane",
+    "annotations": {
+      "instrumentation.opentelemetry.io/inject-java": "otel-instrumentation"
     }
   },
-  "kind": "service",
-  "disabled": true,
-  "version": "0.1",
-  "spec": {
-    "enable_host_anti_affinity": false,
-    "type": "application",
-    "restart_policy": "Always",
-    "release": {
-      "strategy": {
-        "type": "RollingUpdate"
+  "disabled": false,
+  "advanced": {
+    "common": {
+      "app_chart": {
+        "values": {
+          "priority_class_name": "facets-critical"
+        }
       },
-      "image": "${blueprint.self.artifacts.awesome-todo-test-service}",
+      "include_common_env_variables": true
+    },
+    "aws": {
+      "iam": {
+        "artifact-s3-rw": {
+          "arn": "${s3.artifact-new.out.attributes.read_write_iam_policy_arn}"
+        },
+        "deployment-context-s3-rw": {
+          "arn": "${s3.deployment-context-new.out.attributes.read_write_iam_policy_arn}"
+        },
+        "state-s3-rw": {
+          "arn": "${s3.state-new.out.attributes.read_write_iam_policy_arn}"
+        },
+        "dynamodb-all-rw": {
+          "arn": "${dynamodb.state-lock-new.out.attributes.read_write_policy}"
+        },
+        "r53-all": {
+          "arn": "arn:aws:iam::aws:policy/AmazonRoute53FullAccess"
+        },
+        "iam-full-access": {
+          "arn": "arn:aws:iam::aws:policy/IAMFullAccess"
+        },
+        "vpc-full-access": {
+          "arn": "arn:aws:iam::aws:policy/AmazonVPCFullAccess"
+        },
+        "ec2-container-registry": {
+          "arn": "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
+        },
+        "secrets-manager-rw": {
+          "arn": "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+        },
+        "assume-role": {
+          "arn": "${iam_policy.assume-role-policy.out.attributes.arn}"
+        },
+        "customer-artifacts": {
+          "arn": "${s3.customer-artifacts.out.attributes.read_write_iam_policy_arn}"
+        }
+      }
+    }
+  },
+  "spec": {
+    "type": "application",
+    "release": {
+      "build": {
+        "artifactory": "root-cr",
+        "name": "control-plane"
+      },
+      "strategy": {
+        "type": "RollingUpdate",
+        "max_available": 1,
+        "max_unavailable": 0
+      },
       "image_pull_policy": "IfNotPresent"
     },
     "runtime": {
-      "args": [],
-      "command": [],
+      "size": {
+        "cpu": "1000m",
+        "memory": "3000Mi"
+      },
       "autoscaling": {
-        "scaling_on": "CPU",
         "min": 1,
         "max": 1,
-        "cpu_threshold": "50"
+        "cpu_threshold": 50,
+        "scaling_on": "CPU"
+      },
+      "health_checks": {
+        "start_up_time": 35,
+        "period": 30,
+        "port": 8080,
+        "timeout": 3,
+        "readiness_check_type": "None",
+        "liveness_check_type": "None",
+        "startup_check_type": "None"
       },
       "ports": {
-        "ports1": {
-          "port": "8080",
-          "service_port": "8080",
+        "http": {
+          "port": 8080,
           "protocol": "tcp"
         },
-        "ports2": {
-          "port": "8081",
-          "service_port": "8081",
+        "metrics": {
+          "port": 8081,
           "protocol": "tcp"
         }
       },
-      "size": {
-        "cpu": "300m",
-        "memory": "1Gi",
-        "cpu_limit": "1000m",
-        "memory_limit": "5Gi"
-      },
-      "health_checks": {
-        "readiness_check_type": "PortCheck",
-        "readiness_start_up_time": 10,
-        "readiness_timeout": 10,
-        "readiness_period": 10,
-        "readiness_port": "8080",
-        "liveness_check_type": "None",
-        "startup_check_type": "None"
+      "metrics": {
+        "prom-metrics": {
+          "path": "/actuator/prometheus",
+          "port_name": "metrics"
+        }
       }
     },
+    "restart_policy": "OnFailure",
     "env": {
-      "LOG_LEVEL": "INFO",
-      "test": "test134"
+      "SPRING_PROFILES_ACTIVE": "production",
+      "FACETS_ORG": "${blueprint.self.variables.FACETS_ORG}",
+      "RELEASE_POD_SA_NAME": "facets-release-pod",
+      "CP_CLOUD": "${blueprint.self.variables.CP_CLOUD}",
+      "CALLBACK_HOST_NAME": "${blueprint.self.variables.env}.console.facets.cloud",
+      "bootstrappers_substack_autoEnabledSubstacks": "toolsingress",
+      "SCHEDULER_ENABLED": "true",
+      "tfSourceVersion": "tf_0.13_upgradenew",
+      "CHINA_CC_HOST": "na",
+      "CHINA_CC_INTERNAL_API_AUTH_TOKEN": "na",
+      "facets_only": "true",
+      "default_deployment_job_type": "KUBERNETES_POD",
+      "net_tun_file_type": "CharDevice",
+      "cc_tf_dynamo_table": "${dynamodb.state-lock-new.out.attributes.table_name}",
+      "cc_tf_state_bucket": "${s3.state-new.out.attributes.bucket_name}",
+      "cc_artifact_s3bucket": "${s3.artifact-new.out.attributes.bucket_name}",
+      "cc_artifact_s3bucket_region": "${s3.artifact-new.out.attributes.bucket_region}",
+      "cc_deployment_bucket": "${s3.deployment-context-new.out.attributes.bucket_name}",
+      "substackBucket": "${s3.deployment-context-new.out.attributes.bucket_name}",
+      "substackBucketRegion": "${s3.deployment-context-new.out.attributes.bucket_region}",
+      "cc_vpc_id": "${network.default.out.attributes.legacy_outputs.vpc_details.vpc_id}",
+      "cc_vpc_cidr": "${network.default.out.attributes.legacy_outputs.vpc_details.vpc_cidr}",
+      "cc_aws_region": "${kubernetes_cluster.default.out.attributes.legacy_outputs.aws_cloud.region}",
+      "cc_tf_state_region": "${s3.state-new.out.attributes.bucket_region}",
+      "cc_route_table_id": "${network.default.out.attributes.legacy_outputs.vpc_details.private_route_table_ids_list}",
+      "INTERNAL_API_AUTH_TOKEN": "${blueprint.self.secrets.INTERNAL_API_AUTH_TOKEN}",
+      "GOOGLE_CLIENT_SECRET": "${blueprint.self.secrets.GOOGLE_CLIENT_SECRET}",
+      "cc_builder_image": "313496281593.dkr.ecr.us-east-1.amazonaws.com/facets-tf-runtime:199",
+      "gcp_builder_image": "313496281593.dkr.ecr.us-east-1.amazonaws.com/facets-tf-runtime:199",
+      "TF_GIT_USERNAME": "${blueprint.self.secrets.TF_GIT_USERNAME}",
+      "TF_GIT_PASSWORD": "${blueprint.self.secrets.TF_GIT_PASSWORD}",
+      "facets_ecr_aws_secret": "${blueprint.self.secrets.facets_ecr_aws_secret}",
+      "facets_ecr_aws_key": "${blueprint.self.secrets.facets_ecr_aws_key}",
+      "GOOGLE_CLIENT_ID": "${blueprint.self.variables.GOOGLE_CLIENT_ID}",
+      "ADMIN_USER": "${blueprint.self.variables.ADMIN_USER}",
+      "default_hosted_zone": "${blueprint.self.variables.default_hosted_zone}",
+      "FEATURE_HOTJAR_SITE_ID": 5012341,
+      "OPA_URL": "http://${service.opa-service.out.interfaces.http.host}:${service.opa-service.out.interfaces.http.port}",
+      "OPENAI_API_KEY": "${blueprint.self.secrets.OPENAI_API_KEY}",
+      "FACETS_GITHUB_APP_NAME": "${blueprint.self.variables.FACETS_GITHUB_APP_NAME}",
+      "FACETS_GITHUB_APP_CLIENT_ID": "${blueprint.self.variables.FACETS_GITHUB_APP_CLIENT_ID}",
+      "FACETS_GITHUB_APP_APP_ID": "${blueprint.self.variables.FACETS_GITHUB_APP_APP_ID}",
+      "FACETS_GITHUB_APP_CLIENT_SECRET": "${blueprint.self.secrets.FACETS_GITHUB_APP_CLIENT_SECRET}",
+      "FACETS_GITHUB_APP_PRIVATE_KEY_BASE64_ENCODED": "${blueprint.self.secrets.FACETS_GITHUB_APP_PRIVATE_KEY_BASE64_ENCODED}",
+      "FACETS_GITLAB_APP_CLIENT_ID": "${blueprint.self.variables.FACETS_GITLAB_APP_CLIENT_ID}",
+      "FACETS_GITLAB_APP_CLIENT_SECRET": "${blueprint.self.secrets.FACETS_GITLAB_APP_CLIENT_SECRET}",
+      "FACETS_BITBUCKET_APP_CLIENT_ID": "${blueprint.self.variables.FACETS_BITBUCKET_APP_CLIENT_ID}",
+      "FACETS_BITBUCKET_APP_CLIENT_SECRET": "${blueprint.self.secrets.FACETS_BITBUCKET_APP_CLIENT_SECRET}",
+      "CUSTOMER_ARTIFACT_BUCKET": "${s3.customer-artifacts.out.attributes.bucket_name}",
+      "CUSTOMER_ARTIFACT_BUCKET_REGION": "${s3.customer-artifacts.out.attributes.bucket_region}",
+      "SPRING_DATA_MONGODB_URI": "${mongo.control-plane-alpha.out.interfaces.cluster.connection_string}/?replicaSet=rs0&readPreference=primaryPreferred&retryReads=true&retryWrites=true&connectTimeoutMS=1000&socketTimeoutMS=30000&serverSelectionTimeoutMS=3000&heartbeatFrequencyMS=5000&waitQueueTimeoutMS=2000",
+      "SPRING_DATA_MONGODB_DATABASE": "deployer",
+      "SPRING_DATA_MONGODB_AUTO_INDEX_CREATION": true,
+      "FACETS_AWS_KEY": "${blueprint.self.secrets.FACETS_AWS_KEY}",
+      "FACETS_AWS_SECRET": "${blueprint.self.secrets.FACETS_AWS_SECRET}",
+      "FACETS_AWS_REGION": "${blueprint.self.secrets.FACETS_AWS_REGION}",
+      "FEATURE_REDIRECT_TO_REACT": "true",
+      "JAVA_ARGS": "-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/dumps",
+      "AWS_SES_ACCESS_SECRET": "${blueprint.self.secrets.AWS_SES_ACCESS_SECRET}",
+      "AWS_SES_ACCESS_KEY": "${blueprint.self.secrets.AWS_SES_ACCESS_KEY}",
+      "FACETS_CRD_RELEASE_NAMESPACE": "facets",
+      "TF_VAR_use_state_pusher": "false",
+      "FEATURE_PARALLEL_RELEASES_ALL_RESOURCES": false
     },
+    "enable_host_anti_affinity": false,
     "cloud_permissions": {
       "aws": {
         "enable_irsa": false
