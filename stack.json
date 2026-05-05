@@ -1,11 +1,5 @@
 {
   "clusterVariablesMeta": {
-    "CLI_TEST_VAR": {
-      "secret": false,
-      "value": "updatedvalue456",
-      "global": false,
-      "description": "Temporary CLI test variable"
-    },
     "MY_SAMPLE_SECRET": {
       "secret": true,
       "value": "NOTSET",
