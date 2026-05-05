@@ -10,13 +10,13 @@
     "lifecycle_rules": {
       "action": "Delete",
       "age_days": 30,
-      "enabled": false,
-      "storage_class": "NEARLINE"
+      "enabled": false
     },
     "requester_pays": false,
     "storage_class": "STANDARD",
     "uniform_bucket_level_access": true,
-    "versioning_enabled": false
+    "versioning_enabled": true
   },
-  "version": "1.0"
+  "version": "1.0",
+  "uiProps": {}
 }
