@@ -1,18 +1,26 @@
 {
   "clusterVariablesMeta": {
-    "MY_SAMPLE_SECRET": {
-      "secret": true,
-      "value": "NOTSET"
-    },
     "MY_COMMON_ENV_VAR": {
       "secret": false,
-      "value": "defaultvalue"
+      "value": "defaultvalue",
+      "global": false,
+      "description": null
+    },
+    "CLI_TEST_VAR": {
+      "secret": false,
+      "value": "testvalue123",
+      "global": false,
+      "description": "Temporary CLI test variable"
+    },
+    "MY_SAMPLE_SECRET": {
+      "secret": true,
+      "value": "NOTSET",
+      "global": false,
+      "description": null
     }
   },
-  "stackVariables": {
-  },
+  "stackVariables": {},
   "componentVersions": {
     "KUBERNETES": "1.19"
   }
-
 }
