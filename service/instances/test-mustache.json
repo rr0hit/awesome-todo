@@ -6,7 +6,7 @@
     }
   },
   "kind": "service",
-  "disabled": true,
+  "disabled": false,
   "version": "0.1",
   "spec": {
     "enable_host_anti_affinity": false,
@@ -16,7 +16,8 @@
       "strategy": {
         "type": "RollingUpdate"
       },
-      "image": "${blueprint.self.artifacts.awesome-todo-test-mustache}"
+      "image": "${blueprint.self.artifacts.capillary-cloud-agent}",
+      "image_pull_policy": "Always"
     },
     "runtime": {
       "args": [],
@@ -25,21 +26,56 @@
         "scaling_on": "CPU",
         "min": 1,
         "max": 1,
-        "cpu_threshold": "50"
+        "cpu_threshold": 50
       },
-      "ports": {},
+      "ports": {
+        "http": {
+          "port": 8000,
+          "protocol": "tcp"
+        }
+      },
       "size": {
         "cpu": "300m",
         "memory": "1Gi",
         "cpu_limit": "1000m",
         "memory_limit": "5Gi"
       },
-      "volumes": {}
+      "health_checks": {
+        "port": 8000,
+        "timeout": 3,
+        "readiness_check_type": "None",
+        "liveness_check_type": "None",
+        "startup_check_type": "None"
+      }
     },
     "env": {
-      "LOG_LEVEL": "INFO"
+      "LOG_LEVEL": "INFO",
+      "OPENAI_API_KEY": "${blueprint.self.secrets.OPENAI_API_KEY}",
+      "ANTHROPIC_API_KEY": "${blueprint.self.secrets.ANTHROPIC_API_KEY}",
+      "SESSION_STORE_TYPE": "mongo",
+      "MONGO_DB_NAME": "aiagents",
+      "MONGO_URI": "${mongo.control-plane.out.interfaces.cluster.connection_string}",
+      "ENVIRONMENT": "production",
+      "AUTH_MODE": "facets",
+      "DEFAULT_DOLLAR_LIMIT": "10",
+      "ENCRYPTION_KEY": "${blueprint.self.variables.ENCRYPTION_KEY}",
+      "SLACK_APP_CLIENT_ID": "${blueprint.self.variables.FACETS_SLACK_APP_CLIENT_ID}",
+      "GITHUB_APP_PRIVATE_KEY_BASE64": "${blueprint.self.secrets.PRAXIS_FACETS_GITHUB_APP_PRIVATE_KEY_BASE64_ENCODED}",
+      "GITHUB_APP_APP_ID": "${blueprint.self.variables.PRAXIS_FACETS_GITHUB_APP_APP_ID}",
+      "GITHUB_APP_CLIENT_ID": "${blueprint.self.variables.PRAXIS_FACETS_GITHUB_APP_CLIENT_ID}",
+      "GITHUB_APP_SLUG": "${blueprint.self.variables.PRAXIS_GITHUB_APP_SLUG}",
+      "STRIPE_API_KEY": "${blueprint.self.secrets.STRIPE_API_KEY}"
     },
-    "init_containers": {},
-    "sidecars": {}
-  }
+    "cloud_permissions": {
+      "aws": {
+        "enable_irsa": false,
+        "iam_policies": {
+          "iam-policies1": {
+            "arn": "${iam_policy.assume-role-policy.out.attributes.arn}"
+          }
+        }
+      }
+    }
+  },
+  "uiProps": {}
 }
