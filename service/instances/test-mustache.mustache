@@ -64,6 +64,9 @@
       "GITHUB_APP_APP_ID": "${blueprint.self.variables.PRAXIS_FACETS_GITHUB_APP_APP_ID}",
       "GITHUB_APP_CLIENT_ID": "${blueprint.self.variables.PRAXIS_FACETS_GITHUB_APP_CLIENT_ID}",
       "GITHUB_APP_SLUG": "${blueprint.self.variables.PRAXIS_GITHUB_APP_SLUG}",
+      {{#customers}}
+      "CONTROL_PLANE_INTERNAL_URL_{{uid}}": "http://${service.control-plane-{{uid}}.out.interfaces.http.host}:${service.control-plane-{{uid}}.out.interfaces.http.port}",
+      {{/customers}}
       "STRIPE_API_KEY": "${blueprint.self.secrets.STRIPE_API_KEY}"
     },
     "cloud_permissions": {
